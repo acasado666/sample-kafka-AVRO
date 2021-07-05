@@ -1,0 +1,15 @@
+{
+  "namespace": "de.ippen.cdp",
+  "type": "record",
+  "name": "User",
+  "fields": [
+    {
+      "name": "firstName",
+      "type": "string"
+    },
+    {
+      "name": "lastName",
+      "type": "string"
+    }
+  ]
+}

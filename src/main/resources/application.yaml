@@ -1,0 +1,25 @@
+app:
+  config:
+    topic-name: avro-topic
+    group-id: avro-group
+
+spring:
+  kafka:
+    consumer:
+      group-id: avro-group
+      auto-offset-reset: earliest
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: io.confluent.kafka.serializers.KafkaAvroDeserializer
+#AC
+      properties:
+        specific.avro.reader: true
+
+    producer:
+      client-id: avro-client-id
+      bootstrap-servers: localhost:9092
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: io.confluent.kafka.serializers.KafkaAvroSerializer
+
+    properties:
+      schema.registry.url: http://localhost:8081
+      specific.avro.reader: true
