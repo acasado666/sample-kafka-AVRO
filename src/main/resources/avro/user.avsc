@@ -1,5 +1,5 @@
 {
-  "namespace": "de.ippen.cdp",
+  "namespace": "de.ippen.cdp.avro",
   "type": "record",
   "name": "User",
   "fields": [
