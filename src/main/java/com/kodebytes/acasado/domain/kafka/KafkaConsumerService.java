@@ -1,6 +1,6 @@
-package de.ippen.cdp.domain.kafka;
+package com.kodebytes.acasado.domain.kafka;
 
-import de.ippen.cdp.avro.User;
+import com.kodebytes.acasado.avro.User;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.springframework.kafka.annotation.KafkaListener;

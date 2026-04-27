@@ -1,4 +1,4 @@
-package de.ippen.cdp.infraestructure.entrypoint.request;
+package com.kodebytes.acasado.infraestructure.entrypoint.request;
 
 import lombok.*;
 

@@ -3,11 +3,9 @@
  *
  * DO NOT EDIT DIRECTLY
  */
-package de.ippen.cdp.avro;
+package com.kodebytes.acasado.avro;
 
-import org.apache.avro.generic.GenericArray;
 import org.apache.avro.specific.SpecificData;
-import org.apache.avro.util.Utf8;
 import org.apache.avro.message.BinaryMessageEncoder;
 import org.apache.avro.message.BinaryMessageDecoder;
 import org.apache.avro.message.SchemaStore;
@@ -150,8 +148,8 @@ public class User extends org.apache.avro.specific.SpecificRecordBase implements
    * Creates a new User RecordBuilder.
    * @return A new User RecordBuilder
    */
-  public static de.ippen.cdp.avro.User.Builder newBuilder() {
-    return new de.ippen.cdp.avro.User.Builder();
+  public static User.Builder newBuilder() {
+    return new User.Builder();
   }
 
   /**
@@ -159,11 +157,11 @@ public class User extends org.apache.avro.specific.SpecificRecordBase implements
    * @param other The existing builder to copy.
    * @return A new User RecordBuilder
    */
-  public static de.ippen.cdp.avro.User.Builder newBuilder(de.ippen.cdp.avro.User.Builder other) {
+  public static User.Builder newBuilder(User.Builder other) {
     if (other == null) {
-      return new de.ippen.cdp.avro.User.Builder();
+      return new User.Builder();
     } else {
-      return new de.ippen.cdp.avro.User.Builder(other);
+      return new User.Builder(other);
     }
   }
 
@@ -172,11 +170,11 @@ public class User extends org.apache.avro.specific.SpecificRecordBase implements
    * @param other The existing instance to copy.
    * @return A new User RecordBuilder
    */
-  public static de.ippen.cdp.avro.User.Builder newBuilder(de.ippen.cdp.avro.User other) {
+  public static User.Builder newBuilder(User other) {
     if (other == null) {
-      return new de.ippen.cdp.avro.User.Builder();
+      return new User.Builder();
     } else {
-      return new de.ippen.cdp.avro.User.Builder(other);
+      return new User.Builder(other);
     }
   }
 
@@ -199,7 +197,7 @@ public class User extends org.apache.avro.specific.SpecificRecordBase implements
      * Creates a Builder by copying an existing Builder.
      * @param other The existing Builder to copy.
      */
-    private Builder(de.ippen.cdp.avro.User.Builder other) {
+    private Builder(User.Builder other) {
       super(other);
       if (isValidValue(fields()[0], other.firstName)) {
         this.firstName = data().deepCopy(fields()[0].schema(), other.firstName);
@@ -215,7 +213,7 @@ public class User extends org.apache.avro.specific.SpecificRecordBase implements
      * Creates a Builder by copying an existing User instance
      * @param other The existing instance to copy.
      */
-    private Builder(de.ippen.cdp.avro.User other) {
+    private Builder(User other) {
       super(SCHEMA$);
       if (isValidValue(fields()[0], other.firstName)) {
         this.firstName = data().deepCopy(fields()[0].schema(), other.firstName);
@@ -241,7 +239,7 @@ public class User extends org.apache.avro.specific.SpecificRecordBase implements
       * @param value The value of 'firstName'.
       * @return This builder.
       */
-    public de.ippen.cdp.avro.User.Builder setFirstName(java.lang.String value) {
+    public User.Builder setFirstName(java.lang.String value) {
       validate(fields()[0], value);
       this.firstName = value;
       fieldSetFlags()[0] = true;
@@ -261,7 +259,7 @@ public class User extends org.apache.avro.specific.SpecificRecordBase implements
       * Clears the value of the 'firstName' field.
       * @return This builder.
       */
-    public de.ippen.cdp.avro.User.Builder clearFirstName() {
+    public User.Builder clearFirstName() {
       firstName = null;
       fieldSetFlags()[0] = false;
       return this;
@@ -281,7 +279,7 @@ public class User extends org.apache.avro.specific.SpecificRecordBase implements
       * @param value The value of 'lastName'.
       * @return This builder.
       */
-    public de.ippen.cdp.avro.User.Builder setLastName(java.lang.String value) {
+    public User.Builder setLastName(java.lang.String value) {
       validate(fields()[1], value);
       this.lastName = value;
       fieldSetFlags()[1] = true;
@@ -301,7 +299,7 @@ public class User extends org.apache.avro.specific.SpecificRecordBase implements
       * Clears the value of the 'lastName' field.
       * @return This builder.
       */
-    public de.ippen.cdp.avro.User.Builder clearLastName() {
+    public User.Builder clearLastName() {
       lastName = null;
       fieldSetFlags()[1] = false;
       return this;

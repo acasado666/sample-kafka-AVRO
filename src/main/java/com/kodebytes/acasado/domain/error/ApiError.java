@@ -1,4 +1,4 @@
-package de.ippen.cdp.domain.error;
+package com.kodebytes.acasado.domain.error;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.*;

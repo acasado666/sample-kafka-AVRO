@@ -1,7 +1,7 @@
-package de.ippen.cdp.infraestructure.entrypoint.rest;
+package com.kodebytes.acasado.infraestructure.entrypoint.rest;
 
-import de.ippen.cdp.domain.kafka.KafKaProducerService;
-import de.ippen.cdp.infraestructure.entrypoint.request.UserRequest;
+import com.kodebytes.acasado.domain.kafka.KafKaProducerService;
+import com.kodebytes.acasado.infraestructure.entrypoint.request.UserRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;

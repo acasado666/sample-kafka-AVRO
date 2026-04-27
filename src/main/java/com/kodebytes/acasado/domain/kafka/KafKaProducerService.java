@@ -1,7 +1,7 @@
-package de.ippen.cdp.domain.kafka;
+package com.kodebytes.acasado.domain.kafka;
 
-import de.ippen.cdp.avro.User;
-import de.ippen.cdp.infraestructure.entrypoint.request.UserRequest;
+import com.kodebytes.acasado.avro.User;
+import com.kodebytes.acasado.infraestructure.entrypoint.request.UserRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.kafka.core.KafkaProducerException;

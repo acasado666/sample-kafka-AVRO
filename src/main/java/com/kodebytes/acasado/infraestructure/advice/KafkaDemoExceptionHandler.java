@@ -1,7 +1,7 @@
-package de.ippen.cdp.infraestructure.advice;
+package com.kodebytes.acasado.infraestructure.advice;
 
 
-import de.ippen.cdp.domain.error.ApiError;
+import com.kodebytes.acasado.domain.error.ApiError;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;

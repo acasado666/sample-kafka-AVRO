@@ -1,4 +1,4 @@
-package de.ippen.cdp;
+package com.kodebytes.acasado;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
