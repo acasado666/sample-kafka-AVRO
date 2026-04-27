@@ -1,4 +1,4 @@
-# KafkaProducerConsumerAVRO
+# Kafka Producer Consumer AVRO
 
 This is a sample Spring Boot application demonstrating the use of Apache Kafka with AVRO serialization for producing and consuming messages.
 
