@@ -1,17 +1,22 @@
 server:
   port: 8082
+  servlet:
+    session:
+      timeout: 30m
 
 spring:
   application:
     name: icecream-orders-service
-    profiles:
-      active: local
+  profiles:
+    active: local
+
 ---
 spring:
   config:
     activate:
       on-profile: local
   kafka:
+    topic: ice-cream-orders
     template:
       default-topic: ice-cream-orders
     producer:

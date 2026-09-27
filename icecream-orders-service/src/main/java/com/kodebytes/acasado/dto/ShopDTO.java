@@ -14,7 +14,10 @@ import lombok.NoArgsConstructor;
 @Builder
 public class ShopDTO {
     @NotNull(message = "iceCreamOrder.shop.shopId is mandatory")
-    private String shopId;
+    private Integer shopId;
+
+    @NotNull(message = "iceCreamOrder.shop.shopName is mandatory")
+    private String shopName;
 
     @Valid
     @NotNull(message = "iceCreamOrder.shop.address is mandatory")

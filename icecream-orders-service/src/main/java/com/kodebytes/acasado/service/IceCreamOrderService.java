@@ -39,11 +39,12 @@ public class IceCreamOrderService {
         var orderLineItems = buildOrderLineItems(iceCreamOrderDTO);
 
         return IceCreamOrder.newBuilder()
-                .setId(new OrderId(UUID.randomUUID()))
+                .setId(UUID.randomUUID())
                 .setName(iceCreamOrderDTO.getName())
+                .setNickName(iceCreamOrderDTO.getNickName() != null ? iceCreamOrderDTO.getNickName() : "")
                 .setShop(shop)
                 .setOrderLineItems(orderLineItems)
-                .setStatus(iceCreamOrderDTO.getStatus())
+                .setStatus(iceCreamOrderDTO.getStatus() != null ? iceCreamOrderDTO.getStatus() : "NEW")
                 .setOrderedTime(Instant.now())
                 .setPickUp(iceCreamOrderDTO.getPickUp())
                 .build();
@@ -56,7 +57,7 @@ public class IceCreamOrderService {
                 .stream().map(orderLineItem ->
                         new OrderLineItem(
                                 orderLineItem.getRecipient(),
-                                orderLineItem.getFalvor(),
+                                orderLineItem.getFlavor(),
                                 orderLineItem.getSize(),
                                 orderLineItem.getQuantity(),
                                 orderLineItem.getCost()
@@ -68,12 +69,12 @@ public class IceCreamOrderService {
     private Shop getShop(IceCreamOrderDTO iceCreamOrderDTO) {
         var shopDTO = iceCreamOrderDTO.getShop();
 
-        var shop = new Shop(shopDTO.getShopId(),
-                new Address(shopDTO.getAddress().getAddressLine1(),
-                        shopDTO.getAddress().getCity(),
-                        shopDTO.getAddress().getCountry(),
-                        shopDTO.getAddress().getZip()
-                ));
+        Address address = new Address(shopDTO.getAddress().getAddressLine1(),
+                shopDTO.getAddress().getCity(),
+                shopDTO.getAddress().getCountry(),
+                shopDTO.getAddress().getZip()
+        );
+        var shop = new Shop(shopDTO.getShopId(), shopDTO.getShopName(), address);
         return shop;
     }
 

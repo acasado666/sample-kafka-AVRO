@@ -5,6 +5,10 @@
   "type": "record",
   "fields": [
     {
+      "name": "shopId",
+      "type": "int"
+    },
+    {
       "name": "shopName",
       "type": "string"
     },

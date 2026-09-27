@@ -1,6 +1,5 @@
 package com.kodebytes.acasado.producer;
 
-import com.google.common.util.concurrent.ListenableFuture;
 import com.kodebytes.acasado.domain.generated.IceCreamOrder;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.clients.producer.ProducerRecord;
@@ -15,7 +14,7 @@ import java.util.concurrent.CompletableFuture;
 @Slf4j
 public class IceCreamOrderProducer {
 
-    @Value("${spring.kafka.topic}")
+    @Value("${spring.kafka.topic:ice-cream-orders}")
     private String topic;
 
     KafkaTemplate<String, IceCreamOrder> kafkaTemplate;
@@ -26,6 +25,7 @@ public class IceCreamOrderProducer {
 
     public void sendMessage(IceCreamOrder iceCreamOrder) {
         String key = iceCreamOrder.getId().toString();
+        log.info("Sending OrderEvent to topic={}, key={}", topic, key);
 
         var producerRecord = new ProducerRecord<>(topic, key, iceCreamOrder);
 
