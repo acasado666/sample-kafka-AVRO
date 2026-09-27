@@ -1,5 +1,5 @@
 server:
-  port: 8082
+  port: 8083
 
 spring:
   application:
@@ -12,14 +12,19 @@ spring:
     activate:
       on-profile: local
   kafka:
-    kafka:
-      template:
-        default-topic: ice-cream-orders
+    topic: ice-cream-orders
+    template:
+      default-topic: ice-cream-orders
     consumer:
       bootstrap-servers: localhost:9092
       key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
       value-deserializer: io.confluent.kafka.serializers.KafkaAvroDeserializer
       group-id: icecream-orders-listener-group
-      auto-offset-reset: latest
+      auto-offset-reset: earliest
     properties:
       schema.registry.url : http://localhost:8081
+      specific.avro.reader: true
+      value:
+        subject:
+          name:
+            strategy: io.confluent.kafka.serializers.subject.RecordNameStrategy
