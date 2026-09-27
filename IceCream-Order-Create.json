@@ -3,6 +3,7 @@
   "name": "Antonio Casado",
   "nickName": "Toni",
   "shop": {
+    "shopId": 12,
     "shopName": "Giovanni's Ice Cream",
     "address": {
       "addressLine1": "1234 Address Line 1",
@@ -13,13 +14,13 @@
   },
   "orderLineItems": [
     {
-      "name": "Ice Cream Cone",
+      "recipient": "CONE",
       "flavor": "VANILLA",
       "size": "MEDIUM",
       "quantity": 1,
       "cost": 3.99
     }
   ],
-  "ordered_time": "2022-06-16T18:40:55.472",
-  "status": "NEW"
+  "pickUp":"IN_STORE",
+  "status":"NEW"
 }
