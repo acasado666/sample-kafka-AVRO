@@ -131,15 +131,24 @@ sample-kafka-AVRO/
    mvn clean install
    ```
 
-3. **Start infrastructure (Kafka, Zookeeper, Schema Registry)**
+3. **NEW Start infrastructure (KRaft, Schema Registry, AVRO, Kafdrop)**
+
+   ```bash
+   docker-compose-Kraft up -d
+   ```
+   This will start:
+   - **Kafka Broker** (Port 9092)
+   - **Confluent Schema Registry** (Port 8081)
+   - **Kafdrp** (Port 9000)
+4. **Start infrastructure (Kafka, Zookeeper, Schema Registry AVRO, Kafdrop)**
    ```bash
    docker-compose up -d
    ```
-
    This will start:
     - **Zookeeper** (Port 2181)
     - **Kafka Broker** (Port 9092)
     - **Confluent Schema Registry** (Port 8081)
+    - **Kafdrp** (Port 9000)
 
 4. **Run the Ice Cream Orders Service**
    ```bash
@@ -166,39 +175,60 @@ Host: localhost:8082
 Content-Type: application/json
 
 {
-  "name": "John Doe",
-  "nickName": "Johnny",
+  "id": 164,
+  "name": "Antonio Casado",
+  "nickName": "Toni",
   "shop": {
-    "shopName": "Downtown Ice Cream",
+    "shopId": 12,
+    "shopName": "Giovanni's Ice Cream",
     "address": {
-      "street": "123 Main St",
-      "city": "Springfield",
-      "state": "IL",
-      "zipCode": "62701"
+      "addressLine1": "1234 Address Line 1",
+      "city": "Zurich",
+      "country": "Switzerland",
+      "zip": "8044"
     }
   },
   "orderLineItems": [
     {
+      "recipient": "CONE",
       "flavor": "VANILLA",
-      "size": "LARGE",
-      "quantity": 2
+      "size": "MEDIUM",
+      "quantity": 1,
+      "cost": 3.99
     }
   ],
-  "pick_up": "IN_STORE"
+  "pickUp":"IN_STORE",
+  "status":"NEW"
 }
 ```
 
 **Response:**
 ```json
 {
-  "id": "order-uuid-123",
-  "name": "John Doe",
-  "nickName": "Johnny",
-  "shop": {...},
-  "orderLineItems": [...],
-  "ordered_time": 1715000000000,
-  "pick_up": "IN_STORE",
-  "status": "NEW"
+   "id": "e39c896e-700d-4698-a58b-d3fed1a410e0",
+   "name": "Antonio Casado",
+   "nickName": "Toni",
+   "shop": {
+      "shopId": 12,
+      "shopName": "Giovanni's Ice Cream",
+      "address": {
+         "addressLine1": "1234 Address Line 1",
+         "city": "Zurich",
+         "country": "Switzerland",
+         "zip": "8044"
+      }
+   },
+   "orderLineItems": [
+      {
+         "recipient": "CONE",
+         "flavor": "VANILLA",
+         "size": "MEDIUM",
+         "quantity": 1,
+         "cost": 3.99
+      }
+   ],
+   "pickUp": "IN_STORE",
+   "status": "NEW"
 }
 ```
 
@@ -207,13 +237,13 @@ Content-Type: application/json
 ## 🔧 Technology Stack
 
 ### Core Framework
-- **Spring Boot 4.0.6** - Application framework
+- **Spring Boot 4.1.0** - Application framework
 - **Spring Kafka** - Kafka integration
 
 ### Serialization & Schema Management
 - **Apache AVRO 1.12.1** - Serialization format
-- **Confluent Kafka AVRO Serializer 8.2.0** - Schema Registry integration
-- **Maven AVRO Plugin 1.9.2** - Code generation from AVRO schemas
+- **Confluent Kafka AVRO Serializer 7.6.0** - Schema Registry integration
+- **Maven AVRO Plugin 1.12.1** - Code generation from AVRO schemas
 
 ### Infrastructure
 - **Apache Kafka 7.5.0** (Confluent)
@@ -275,36 +305,70 @@ These JAR is consumed by both service and consumer modules.
 ### Service Configuration (`icecream-orders-service/application.yml`)
 ```yaml
 server:
-  port: 8082
+   port: 8082
+   servlet:
+      session:
+         timeout: 30m
 
 spring:
-  kafka:
-    template:
-      default-topic: ice-cream-orders
-    producer:
-      bootstrap-servers: localhost:9092
-      key-serializer: org.apache.kafka.common.serialization.StringSerializer
-      value-serializer: io.confluent.kafka.serializers.KafkaAvroSerializer
-    properties:
-      schema.registry.url: http://localhost:8081
-      value.subject.name.strategy: io.confluent.kafka.serializers.subject.RecordNameStrategy
+   application:
+      name: icecream-orders-service
+   profiles:
+      active: local
+
+---
+spring:
+   config:
+      activate:
+         on-profile: local
+   kafka:
+      topic: ice-cream-orders
+      template:
+         default-topic: ice-cream-orders
+      producer:
+         bootstrap-servers: localhost:9092
+         key-serializer: org.apache.kafka.common.serialization.StringSerializer
+         value-serializer: io.confluent.kafka.serializers.KafkaAvroSerializer
+      properties:
+         schema.registry.url : http://localhost:8081
+         value:
+            subject:
+               name:
+                  strategy: io.confluent.kafka.serializers.subject.RecordNameStrategy
 ```
 
 ### Consumer Configuration (`icecream-orders-consumer/application.yml`)
 ```yaml
 server:
-  port: 8082
+   port: 8083
 
 spring:
-  kafka:
-    consumer:
-      bootstrap-servers: localhost:9092
-      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
-      value-deserializer: io.confluent.kafka.serializers.KafkaAvroDeserializer
-      group-id: icecream-orders-listener-group
-      auto-offset-reset: latest
-    properties:
-      schema.registry.url: http://localhost:8081
+   application:
+      name: icecream-orders-consumer
+   profiles:
+      active: local
+---
+spring:
+   config:
+      activate:
+         on-profile: local
+   kafka:
+      topic: ice-cream-orders
+      template:
+         default-topic: ice-cream-orders
+      consumer:
+         bootstrap-servers: localhost:9092
+         key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+         value-deserializer: io.confluent.kafka.serializers.KafkaAvroDeserializer
+         group-id: icecream-orders-listener-group
+         auto-offset-reset: earliest
+      properties:
+         schema.registry.url : http://localhost:8081
+         specific.avro.reader: true
+         value:
+            subject:
+               name:
+                  strategy: io.confluent.kafka.serializers.subject.RecordNameStrategy
 ```
 
 ## 📝 AVRO Schema Example
