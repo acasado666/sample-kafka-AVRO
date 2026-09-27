@@ -1,6 +1,5 @@
 package com.kodebytes.acasado.dto;
 
-
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.kodebytes.acasado.domain.generated.PickUp;
 import jakarta.validation.Valid;
